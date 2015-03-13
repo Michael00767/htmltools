@@ -32,6 +32,7 @@
   "homepage": "https://github.com/Michael00767/htmltools",
   "dependencies": {
     "bootstrap": "^3.3.2",
+    "clean-css": "^3.1.6",
     "nodewebkit": "^0.11.6",
     "uglify-js": "^2.4.17"
   }

@@ -3,6 +3,7 @@
 var fs = require('fs');
 var path = require('path');
 var UglifyJS = require("uglify-js");
+var CleanCSS = require('clean-css');
 
 var result = $("#result");
 
@@ -15,6 +16,7 @@ function run(dir){
         if (fs.statSync(name).isDirectory()){
             run(name);
         } else {
+        	//created minify js files
         	if(path.extname(files[i]) == ".js"&&(path.basename(files[i], '.js').indexOf(".min")<0)){
 					var outputPath = dir+"/";
 					var minFile = path.basename(files[i], '.js')+".min.js";
@@ -42,6 +44,21 @@ function run(dir){
 					  console.log(mapFile+' created');
 					});
 			}
+        	//created minify css files
+			if(path.extname(files[i]) == ".css"&&(path.basename(files[i], '.css').indexOf(".min")<0)){
+				var outputPath = dir+"/";
+				var minFile = path.basename(files[i], '.css')+".min.css";
+				var data = fs.readFileSync(outputPath+files[i]).toString();
+				var minified = new CleanCSS().minify(data).styles;
+				fs.writeFile(outputPath+minFile, minified, function (err) {
+					  if (err) {
+					    console.log(err);
+					    return;
+					  }
+					  console.log(minFile+' created');
+				});
+			}
+
 
         }
 
